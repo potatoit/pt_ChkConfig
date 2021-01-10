@@ -51,14 +51,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIService.cs" />
+    <Compile Include="GetData.cs" />
     <Compile Include="IONAPIFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SortingOrder.cs" />
+    <Compile Include="transactionResult.cs" />
+    <Compile Include="miresults.cs" />
+    <Compile Include="SortingOrderDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <Content Include="PublishOutput\pt_ChkConfig.zip" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>powershell.exe -Command $null=mkdir '$(SolutionDir)pt_ChkConfig\PublishOutput'; Compress-Archive -CompressionLevel Optimal -Path '$(TargetDir)*.*' -DestinationPath '$(SolutionDir)\pt_ChkConfig\PublishOutput\$(ProjectName).zip' -Force</PostBuildEvent>
+  </PropertyGroup>
 </Project>

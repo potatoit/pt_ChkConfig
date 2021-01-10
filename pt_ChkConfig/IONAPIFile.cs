@@ -19,7 +19,7 @@ namespace pt_ChkConfig
         public string oa { get; set; }
         public string ot { get; set; }
         public string or { get; set; }
-        public string ru { get; set; } = "oob://localhost/m3dlt";
+        public string ru { get; set; } // = "oob://localhost/m3dlt";
         public string ev { get; set; }
         public string v { get; set; }
         public string saak { get; set; }
@@ -35,6 +35,8 @@ namespace pt_ChkConfig
         public delegate void RetrievedTokenHandler(string aToken);
         public event RetrievedTokenHandler RetrievedTokenEvent;
 
+        public Exception ErrorException { get; set; }
+
         //private const string RedirectUri = "oob://localhost/qhexportmi";
         //LoginWebView webView = new LoginWebView();
 
@@ -43,6 +45,11 @@ namespace pt_ChkConfig
         public IONAPIFile()
         {
 
+        }
+
+        ~IONAPIFile()
+        {
+            RevokeToken();
         }
 
         //public IONAPIFile(string aPath)
@@ -114,12 +121,9 @@ namespace pt_ChkConfig
             return (cs);
         }
 
-        public static IONAPIFile LoadIONAPI(string aPath)
+        public IONAPIFile Load(string aPath)
         {
             IONAPIFile result = null;
-
-            //string fileContents = File.ReadAllText(aPath);
-
             using (StreamReader sr = new StreamReader(aPath))
             {
                 string fileContents = sr.ReadToEnd();
@@ -128,18 +132,32 @@ namespace pt_ChkConfig
                 {
                     try
                     {
-                        result = JsonConvert.DeserializeObject<IONAPIFile>(fileContents);
+                        JsonConvert.PopulateObject(fileContents, this);
+                        result = this;
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-
+                        ErrorException = ex;
                     }
 
                 }
                 sr.Close();
             }
+            return (result);
+        }
 
+        public static IONAPIFile LoadIONAPI(string aPath)
+        {
+            IONAPIFile result = new IONAPIFile();
 
+            try
+            {
+                result.Load(aPath);
+            }
+            catch (Exception ex)
+            {
+                result = null;
+            }
 
             return (result);
         }
@@ -228,6 +246,7 @@ namespace pt_ChkConfig
                 //{
                 //    client = new OAuth2Client(new Uri(getTokenUrl()), getClientId(), getClientSecret());
                 //}
+                throw new Exception(".ionapi file doesn't have a service account");
             }
 
             client = new OAuth2Client(new Uri(getTokenUrl()), getClientId(), getClientSecret());
@@ -241,6 +260,11 @@ namespace pt_ChkConfig
             else
             {
                 token = client.RequestResourceOwnerPasswordAsync(getServiceAccount(), getServiceAccountKey()).Result;
+            }
+
+            if(null == token)
+            {
+                throw new Exception("Failed to retrieve token");
             }
 
             if (null != token.RefreshToken)
