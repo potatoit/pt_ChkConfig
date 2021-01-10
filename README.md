@@ -15,7 +15,7 @@ pt_ChkConfig /file "C:\Temp\Config\ConfigData_PurchasePortal_TRANS ID LSTPOBYSUP
   /pause - if this argument is specified, it will pause the output before exiting the program  
 
 More details can be found here:
-https://potatoit.kiwi/?p=2419
+https://potatoit.kiwi/2021/01/11/business-engine-configuration-data-and-crs021-sorting-options/
 
 You can download the .zip file containing the application here:
 (https://github.com/potatoit/pt_ChkConfig/tree/master/pt_ChkConfig/PublishOutput)
