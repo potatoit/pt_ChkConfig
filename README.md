@@ -14,5 +14,8 @@ pt_ChkConfig /file "C:\Temp\Config\ConfigData_PurchasePortal_TRANS ID LSTPOBYSUP
   /createsortingorder - this will attempt to create the sorting order (will only do it if an existing sorting order doesn't exist, it will not activate the sorting order)
   /pause - if this argument is specified, it will pause the output before exiting the program
 
+You can download the .zip file containing the application here:
+(https://github.com/potatoit/pt_ChkConfig/tree/master/pt_ChkConfig/PublishOutput)
+
 # Disclaimer
 HE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
