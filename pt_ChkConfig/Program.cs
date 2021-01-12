@@ -19,7 +19,9 @@ Arguments:
   /file <path to file or directory> - if a directory it will scan the files in that directory
   /ionapi <path to ionapi file> - this is the path to a valid .ionapi with a service account
   /checksortorder - this will check M3 if the .ionapi file is specified
+  /createsortingorder - this will create the sorting order, but not activate it
   /pause - if this argument is specified, it will pause the output before exiting the program
+  /st - suppress the prining of the tenant from IONAPI file
 ";
         GetData apiService = null;
         static void Main(string[] args)
@@ -35,6 +37,7 @@ Arguments:
                 bool checkSortingOrder = false;
                 bool createSortingOrder = false;
                 bool pause = false;
+                bool supressTenant = false;
                 for(int i = 0; i < args.Length; i++)
                 {
                     string argument = args[i];
@@ -76,6 +79,11 @@ Arguments:
                         {
                             pause = true;
                         }
+                        else if(argument.Trim() == "/st")
+                        {
+                            //
+                            supressTenant = true;
+                        }
                     }
                 }
                 if(files.Count > 0)
@@ -87,6 +95,7 @@ Arguments:
                         program.apiService = (GetData)(new GetData()).Load(ionapiFile);
                         if (null != program.apiService)
                         {
+                            if(!supressTenant)  Console.WriteLine("Checking Tenant: " + program.apiService.getTenant());
                             foreach (SortingOrderDefinition currentSortingOrder in sortingOrderDefinitions)
                             {
                                 program.checkM3SortingOrders(currentSortingOrder, createSortingOrder);
@@ -238,7 +247,7 @@ Arguments:
                         {
                             if(res.results[0].errorCode == "WOI0203")
                             {
-                                Console.Write("doesn't exist");
+                                Console.WriteLine("doesn't exist");
                                 // sorting order doesn't exist, perhaps we should create it
                                 if(aCreate)
                                 {
