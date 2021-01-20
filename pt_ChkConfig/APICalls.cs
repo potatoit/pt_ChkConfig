@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace pt_ChkConfig
 {
-    public class GetData : APIService
+    public class APICalls : APIService
     {
 
         public string CRS021MI_GetSrtOpt(string aTable, string aSortingOption)
@@ -56,6 +56,63 @@ namespace pt_ChkConfig
                 }
 
                 string url = getIONAPIUrlForM3() + baseAPI + arguments;
+
+                result = callService(new Uri(url));
+            }
+
+            return (result);
+        }
+
+        public string generateGenericCallUrl(string aProgram, string aTransaction, Dictionary<string, string> aFields)
+        {
+            string result = null;
+
+            if (!string.IsNullOrEmpty(aProgram) && !string.IsNullOrEmpty(aTransaction))
+            {
+                string programTransaction = aProgram + "/" + aTransaction;
+                string arguments = null;
+                StringBuilder builder = new StringBuilder(1000);
+                builder.Append("?");
+
+                if (null != aFields && aFields.Count > 0)
+                {
+                    foreach (string key in aFields.Keys)
+                    {
+                        string value = aFields[key];
+                        if (!string.IsNullOrEmpty(value))
+                        {
+                            if (builder.Length > 1)
+                            {
+                                builder.Append("&");
+                            }
+                            builder.Append(key);
+                            builder.Append("=");
+
+                            builder.Append(Uri.EscapeDataString(value));
+                        }
+                    }
+                }
+
+                if (builder.Length > 1)
+                {
+                    arguments = builder.ToString();
+                }
+
+                result = programTransaction + arguments;
+            }
+
+            return (result);
+        }
+
+        public string genericCalls(string aDataUrl)
+        {
+            string result = null;
+
+            if(!string.IsNullOrEmpty(aDataUrl))
+            {
+                string baseAPI = "m3api-rest/v2/execute/" + aDataUrl;
+
+                string url = getIONAPIUrlForM3() + baseAPI;
 
                 result = callService(new Uri(url));
             }

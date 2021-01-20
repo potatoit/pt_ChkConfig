@@ -31,10 +31,6 @@ namespace pt_ChkConfig
                         {
                             Fields.Add(value);
                         }
-                        //if (currentKey.Contains("KEY"))
-                        //{
-                        //    Fields.Add(value);
-                        //}
                     }
                 }
             }

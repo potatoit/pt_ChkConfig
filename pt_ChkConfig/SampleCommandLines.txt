@@ -1,0 +1,6 @@
+﻿
+# check a sorting order and pause
+/file "C:\Temp\Config\ConfigData_PurchasePortal_TRANS ID LSTPOBYSUP_1.xml" /ionapi "C:\Temp\Config\SAC-PostmanTest2.ionapi" /checksortorder /createsortingorder /pause
+
+# interate through the apis
+/file "C:\Temp\Config\ConfigData_PurchasePortal_TRANS ID LSTPOBYSUP_1.xml" /ionapi "C:\Temp\Config\SAC-PostmanTest2.ionapi" /processFile /step /pause

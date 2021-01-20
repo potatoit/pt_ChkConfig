@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APIService.cs" />
-    <Compile Include="GetData.cs" />
+    <Compile Include="APICalls.cs" />
     <Compile Include="IONAPIFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,6 +61,7 @@
     <Compile Include="SortingOrderDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SampleCommandLines.txt" />
     <None Include="App.config" />
     <None Include="packages.config" />
     <Content Include="PublishOutput\pt_ChkConfig.zip" />
